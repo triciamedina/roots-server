@@ -1,6 +1,6 @@
 const xss = require('xss')
 const bcrypt = require('bcryptjs')
-const REGEX_NUMBER = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+const REGEX_NUMBER = /^(?=.*\d)[A-Za-z\d]{8,}$/
 
 const UsersService = {
     hasUserWithEmail(db, email) {
@@ -40,6 +40,7 @@ const UsersService = {
             email: xss(user.email),
             first_name: xss(user.first_name),
             last_name: xss(user.last_name),
+            created_at: new Date(user.created_at)
         }
     }
 }

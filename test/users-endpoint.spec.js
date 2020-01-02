@@ -1,4 +1,3 @@
-const { expect } = require('chai')
 const knex = require('knex')
 const app = require('../src/app')
 const helpers = require('./test-helpers')
@@ -24,7 +23,7 @@ describe('Users Endpoints', function() {
 
     afterEach('cleanup', () => helpers.cleanTables(db))
 
-    describe(`POST /api/users`, () => {
+    describe(`POST /api/user`, () => {
         context(`User Validation`, () => {
             beforeEach('insert users', () =>
                 helpers.seedUsers(
@@ -47,8 +46,7 @@ describe('Users Endpoints', function() {
                     delete registerAttemptBody[field]
 
                     return supertest(app)
-                        .post('/api/users')
-                        .set({ Authorization: `Bearer ${process.env.API_TOKEN}`})
+                        .post('/api/user')
                         .send(registerAttemptBody)
                         .expect(400, {
                             error: `Missing '${field}' in request body`
@@ -65,8 +63,7 @@ describe('Users Endpoints', function() {
                 }
 
                 return supertest(app)
-                    .post('/api/users')
-                    .set({ Authorization: `Bearer ${process.env.API_TOKEN}`})
+                    .post('/api/user')
                     .send(userShortPassword)
                     .expect(400, { error: `Password must be longer than 8 characters` })
             })
@@ -80,8 +77,7 @@ describe('Users Endpoints', function() {
                 }
 
                 return supertest(app)
-                    .post('/api/users')
-                    .set({ Authorization: `Bearer ${process.env.API_TOKEN}`})
+                    .post('/api/user')
                     .send(userLongPassword)
                     .expect(400, { error: `Password must be less than 36 characters` })
             })
@@ -95,8 +91,7 @@ describe('Users Endpoints', function() {
                 }
 
                 return supertest(app)
-                    .post('/api/users')
-                    .set({ Authorization: `Bearer ${process.env.API_TOKEN}`})
+                    .post('/api/user')
                     .send(userPasswordStartsSpaces)
                     .expect(400, { error: `Password must not start or end with empty spaces`})
             })
@@ -110,8 +105,7 @@ describe('Users Endpoints', function() {
                 }
 
                 return supertest(app)
-                    .post('/api/users')
-                    .set({ Authorization: `Bearer ${process.env.API_TOKEN}`})
+                    .post('/api/user')
                     .send(userPasswordEndsSpaces)
                     .expect(400, { error: `Password must not start or end with empty spaces` })
             })
@@ -125,8 +119,7 @@ describe('Users Endpoints', function() {
                 }
 
                 return supertest(app)
-                    .post('/api/users')
-                    .set({ Authorization: `Bearer ${process.env.API_TOKEN}`})
+                    .post('/api/user')
                     .send(duplicateUser)
                     .expect(400, { error: `Account with this email already exists` })
             })
@@ -142,8 +135,7 @@ describe('Users Endpoints', function() {
                 }
 
                 return supertest(app)
-                    .post('/api/users')
-                    .set({ Authorization: `Bearer ${process.env.API_TOKEN}`})
+                    .post('/api/user')
                     .send(newUser)
                     .expect(201)
                     .expect(res => {
@@ -152,7 +144,7 @@ describe('Users Endpoints', function() {
                         expect(res.body.first_name).to.eql(newUser.first_name)
                         expect(res.body.last_name).to.eql(newUser.last_name)
                         expect(res.body).to.not.have.property('password')
-                        expect(res.headers.location).to.eql(`/api/users/${res.body.id}`)
+                        expect(res.headers.location).to.eql(`/api/user/${res.body.id}`)
                         const expectedDate = new Date().toLocaleString('en', { timeZone: 'UTC' })
                         const actualDate = new Date(res.body.created_at).toLocaleString()
                         expect(actualDate).to.eql(expectedDate)

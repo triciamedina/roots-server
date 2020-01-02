@@ -2,7 +2,7 @@ const xss = require('xss')
 const bcrypt = require('bcryptjs')
 const REGEX_NUMBER = /^(?=.*\d)[A-Za-z\d]{8,}$/
 
-const UsersService = {
+const UserService = {
     hasUserWithEmail(db, email) {
         return db('roots_users')
             .where({ email })
@@ -45,4 +45,4 @@ const UsersService = {
     }
 }
 
-module.exports = UsersService
+module.exports = UserService

@@ -1,12 +1,12 @@
 const express = require('express')
 const path = require('path')
-const UsersService = require('./users-service')
+const UserService = require('./user-service')
 // const  { requireAuth } = require('../middleware/basic-auth')
 
-const usersRouter = express.Router()
+const userRouter = express.Router()
 const bodyParser = express.json()
 
-usersRouter
+userRouter
     .post('/', bodyParser, (req, res, next) => {
         const { email, first_name, last_name, password } = req.body
 
@@ -18,13 +18,13 @@ usersRouter
             }
         }
 
-        const passwordError = UsersService.validatePassword(password)
+        const passwordError = UserService.validatePassword(password)
 
         if (passwordError) {
             return res.status(400).json({ error: passwordError})
         }
 
-        UsersService.hasUserWithEmail(
+        UserService.hasUserWithEmail(
             req.app.get('db'),
             email,
         )
@@ -33,7 +33,7 @@ usersRouter
                     return res.status(400).json({ error: `Account with this email already exists` })
                 }
                 
-                return UsersService.hashPassword(password)
+                return UserService.hashPassword(password)
                     .then(hashedPassword => {
                         const newUser = {
                             email,
@@ -42,7 +42,7 @@ usersRouter
                             last_name,
                         }
                         
-                        return UsersService.insertUser(
+                        return UserService.insertUser(
                             req.app.get('db'),
                             newUser
                         )
@@ -50,11 +50,11 @@ usersRouter
                                 res
                                     .status(201)
                                     .location(path.posix.join(req.originalUrl, `/${user.id}`))
-                                    .json(UsersService.serializeUser(user))
+                                    .json(UserService.serializeUser(user))
                             })
                     })
             })
             .catch(next)
     })
 
-module.exports = usersRouter
+module.exports = userRouter

@@ -3,10 +3,10 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
-const logger = require('./logger')
 const { NODE_ENV } = require('./config')
 const usersRouter = require('./users/users-router')
 const authRouter = require('./auth/auth-router')
+const charitiesRouter = require('./charity/charity-router')
 
 const app = express()
 
@@ -24,6 +24,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authRouter)
 app.use('/api/user', usersRouter)
+app.use('/api/charity', charitiesRouter)
 
 app.use(function errorHandler(error, req, res, next) {
     let response;

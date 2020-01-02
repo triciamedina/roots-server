@@ -13,16 +13,22 @@ userRouter
 
         for (const field of ['email', 'first_name', 'last_name', 'password']) {
             if (!req.body[field]) {
-                return res.status(400).json({
-                    error: `Missing '${field}' in request body`
-                })
+                return res
+                    .status(400)
+                    .json({
+                        error: `Missing '${field}' in request body`
+                    })
             }
         }
 
         const passwordError = UserService.validatePassword(password)
 
         if (passwordError) {
-            return res.status(400).json({ error: passwordError})
+            return res
+                .status(400)
+                .json({ 
+                    error: passwordError
+                })
         }
 
         UserService.hasUserWithEmail(
@@ -31,7 +37,11 @@ userRouter
         )
             .then(hasUserWithEmail => {
                 if (hasUserWithEmail) {
-                    return res.status(400).json({ error: `Account with this email already exists` })
+                    return res
+                        .status(400)
+                        .json({ 
+                            error: `Account with this email already exists` 
+                        })
                 }
                 
                 return UserService.hashPassword(password)
@@ -58,8 +68,34 @@ userRouter
             .catch(next)
     })
 
-// userRouter
-//     .route('/:user_id/donation')
-//     .all(requireAuth)
+userRouter
+    .route('/:user_id/donation')
+    .all(requireAuth)
+    .get(bodyParser, (req, res, next) => {
+
+        UserService.hasUserWithId(
+            req.app.get('db'),
+            req.params.user_id,
+        )
+            .then(hasUserWithId => {
+                if (!hasUserWithId) {
+                    return res
+                        .status(404)
+                        .json({ 
+                            error: `User doesn't exist` 
+                        })
+                }
+
+                return UserService.getDonationsForUser(
+                    req.app.get('db'),
+                    req.params.user_id
+                )
+                    .then(donations => {
+                        res
+                            .json(donations.map(UserService.serializeDonation))
+                    })
+                    .catch(next)
+            })
+    })
 
 module.exports = userRouter

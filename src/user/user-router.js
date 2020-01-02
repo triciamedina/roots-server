@@ -1,13 +1,14 @@
 const express = require('express')
 const path = require('path')
 const UserService = require('./user-service')
-// const  { requireAuth } = require('../middleware/basic-auth')
+const  { requireAuth } = require('../middleware/jwt-auth')
 
 const userRouter = express.Router()
 const bodyParser = express.json()
 
 userRouter
-    .post('/', bodyParser, (req, res, next) => {
+    .route('/')
+    .post(bodyParser, (req, res, next) => {
         const { email, first_name, last_name, password } = req.body
 
         for (const field of ['email', 'first_name', 'last_name', 'password']) {
@@ -56,5 +57,9 @@ userRouter
             })
             .catch(next)
     })
+
+// userRouter
+//     .route('/:user_id/donation')
+//     .all(requireAuth)
 
 module.exports = userRouter

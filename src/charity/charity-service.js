@@ -1,8 +1,18 @@
 const config = require('../config')
+const fetch = require('node-fetch')
 
 const CharityService = {
-    getCharities() {
-        return config.CHARITY_URLS
+    getCharities(queryString) {
+        return config.CHARITY_URLS.map(charity => {
+            const url = charity + '?' + queryString
+            return fetch(url)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    throw new Error(response.statusText)
+                })
+        })
     },
     formatQueryParams(params) {
         const queryItems = Object.keys(params)

@@ -75,7 +75,33 @@ const UserService = {
             school_name: xss(donation.school_name),
             image_url: xss(donation.image_url)
         }
-    }
+    },
+    getDonationById(db, id) {
+        return db
+            .from('roots_donations AS don')
+            .select(
+                'don.id',
+                'don.donated_on',
+                'don.amount',
+                'don.project_name',
+                'don.project_description',
+                'don.project_url',
+                'don.school_name',
+                'don.image_url'
+            )
+            .where('don.id', id)
+            .first()
+    },
+    insertDonation(db, newDonation) {
+        return db
+            .insert(newDonation)
+            .into('roots_donations')
+            .returning('*')
+            .then(([donation]) => donation)
+            .then(donation =>
+                UserService.getDonationById(db, donation.id)
+            )
+    },
 }
 
 module.exports = UserService

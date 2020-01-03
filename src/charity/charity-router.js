@@ -25,8 +25,8 @@ charityRouter
             max,
             index
         }
-        const queryString = CharityService.formatQueryParams(params)
-        const charities = CharityService.getCharities(queryString)
+
+        const charities = CharityService.getCharities(params)
 
         Promise.all(charities)
             .then(data => {

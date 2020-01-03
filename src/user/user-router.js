@@ -69,33 +69,63 @@ userRouter
     })
 
 userRouter
-    .route('/:user_id/donation')
+    .route('/donation')
     .all(requireAuth)
-    .get(bodyParser, (req, res, next) => {
-
-        UserService.hasUserWithId(
-            req.app.get('db'),
-            req.params.user_id,
-        )
-            .then(hasUserWithId => {
-                if (!hasUserWithId) {
-                    return res
-                        .status(404)
-                        .json({ 
-                            error: `User doesn't exist` 
-                        })
-                }
-
-                return UserService.getDonationsForUser(
+    .all(bodyParser)
+    .get((req, res, next) => {
+        UserService.getDonationsForUser(
                     req.app.get('db'),
-                    req.params.user_id
+                    req.user.id
                 )
                     .then(donations => {
                         res
                             .json(donations.map(UserService.serializeDonation))
                     })
                     .catch(next)
+    })
+    .post((req, res, next) => {
+        // first check if required values are provided in request body (and that they are valid etc.)
+        const { 
+            body: {
+                amount, 
+                project_name, 
+                project_description, 
+                project_url, 
+                school_name, 
+                image_url
+            },
+            user: { id }
+        } = req
+
+        for (const field of ['amount', 'project_name', 'project_description', 'project_url', 'school_name', 'image_url']) {
+            if (req.body[field] == null) {
+                return res.status(400).json({
+                    error: `Missing '${field}' in request body`
+                })
+            }
+        }
+
+        const newDonation = { 
+            amount, 
+            project_name, 
+            project_description, 
+            project_url, 
+            school_name, 
+            image_url,
+            user_id: id
+        }
+
+        UserService.insertDonation(
+            req.app.get('db'),
+            newDonation
+        )
+            .then(donation => {
+                res
+                    .status(201)
+                    .location(path.posix.join(req.originalUrl, `/${donation.id}`))
+                    .json(UserService.serializeDonation(donation))
             })
+            .catch(next)
     })
 
 module.exports = userRouter

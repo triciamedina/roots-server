@@ -7,6 +7,7 @@ const { NODE_ENV } = require('./config')
 const userRouter = require('./user/user-router')
 const authRouter = require('./auth/auth-router')
 const charityRouter = require('./charity/charity-router')
+const donationRouter = require('./donation/donation-router')
 
 const app = express()
 
@@ -25,6 +26,7 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter)
 app.use('/api/charity', charityRouter)
+app.use('/api/donation', donationRouter)
 
 app.use(function errorHandler(error, req, res, next) {
     let response;

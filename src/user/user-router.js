@@ -75,7 +75,7 @@ userRouter
     .get((req, res, next) => {
         UserService.getDonationsForUser(
                     req.app.get('db'),
-                    req.user.id
+                    req.user.id // id is set by jwt-auth middleware
                 )
                     .then(donations => {
                         res
@@ -84,7 +84,6 @@ userRouter
                     .catch(next)
     })
     .post((req, res, next) => {
-        // first check if required values are provided in request body (and that they are valid etc.)
         const { 
             body: {
                 amount, 
@@ -94,8 +93,10 @@ userRouter
                 school_name, 
                 image_url
             },
-            user: { id }
+            user: { id } // id is set by jwt-auth middleware
         } = req
+
+        // TODO: check that provided values are valid
 
         for (const field of ['amount', 'project_name', 'project_description', 'project_url', 'school_name', 'image_url']) {
             if (req.body[field] == null) {

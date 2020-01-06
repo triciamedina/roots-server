@@ -1,5 +1,7 @@
 require('dotenv').config()
 
+// Q: How do you update the migrations directory so that it looks for /db/migrations ?
+
 module.exports = {
     "migrationsDirectory": "migrations",
     "driver": "pg",

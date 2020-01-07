@@ -4,17 +4,18 @@ const config = require('../config')
 const  { requireAuth } = require('../middleware/jwt-auth')
 
 const charityRouter = express.Router()
-const bodyParser = express.json()
 
 charityRouter
     .route('/')
-    .get(requireAuth, bodyParser, (req, res, next) => {
-        const { zip, max, index } = req.body
+    .get(requireAuth, (req, res, next) => {
+        // const { zip, max, index } = req.body
+
+        const { zip, max, index } = req.query
 
         for (const field of ['zip', 'max', 'index']) {
-            if (req.body[field] == null) {
+            if (req.query[field] == null) {
                 return res.status(400).json({
-                    error: `Missing '${field}' in request body`
+                    error: `Missing '${field}' in request query`
                 })
             }
         }

@@ -19,7 +19,6 @@ app.use(helmet())
 app.use(cors())
 
 app.use(cors({
-    // Q: What do you use for client origin to make sure CORS is setup?
     origin: CLIENT_ORIGIN
 }))
 

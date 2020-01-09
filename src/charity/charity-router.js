@@ -8,8 +8,6 @@ const charityRouter = express.Router()
 charityRouter
     .route('/')
     .get(requireAuth, (req, res, next) => {
-        // const { zip, max, index } = req.body
-
         const { zip, max, index } = req.query
 
         for (const field of ['zip', 'max', 'index']) {

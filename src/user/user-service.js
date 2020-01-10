@@ -61,7 +61,15 @@ const UserService = {
                 'donations.project_url',
                 'donations.school_name',
                 'donations.image_url',
+                db.raw(
+                    `row_to_json(
+                        SELECT 
+                            EXTRACT(YEAR FROM TIMESTAMP donations.donated_on) AS "year"
+                    )`
+                )
             )
+            .orderBy('donations.donated_on', 'desc')
+            .groupBy('year')
             .where('donations.user_id', user_id)
             //  select datepart(yyyy, [donations.donated_on]) as [year] (creating calculated column)
             //  order by date descending

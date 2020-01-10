@@ -63,6 +63,9 @@ const UserService = {
                 'donations.image_url',
             )
             .where('donations.user_id', user_id)
+            //  select datepart(yyyy, [donations.donated_on]) as [year] (creating calculated column)
+            //  order by date descending
+            //  group by year
     },
     serializeDonation(donation) {
         return {

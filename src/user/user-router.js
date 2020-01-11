@@ -1,7 +1,9 @@
 const express = require('express')
 const path = require('path')
+const plaid = require('plaid')
 const UserService = require('./user-service')
 const  { requireAuth } = require('../middleware/jwt-auth')
+const config = require('../config')
 
 const userRouter = express.Router()
 const bodyParser = express.json()
@@ -127,6 +129,33 @@ userRouter
                     .json(UserService.serializeDonation(donation))
             })
             .catch(next)
+    })
+
+userRouter
+    .route('/account')
+    .all(requireAuth)
+    .all(bodyParser)
+    .post((req, res, next) => {
+        const { 
+            body: {
+                public_token
+            },
+            user: { id } // id is set by jwt-auth middleware
+        } = req
+
+        const plaidClient = new plaid.Client(
+            config.PLAID_CLIENT_ID,
+            config.PLAID_SECRET,
+            config.PLAID_PUBLIC_KEY,
+            plaid.environments.sandbox,
+            {version: '2018-05-22'}
+        )
+
+        plaidClient.exchangePublicToken(public_token, (err, res) => {
+            const { access_token, item_id } = res
+            console.log(access_token, item_id)
+           
+        })
     })
 
 module.exports = userRouter

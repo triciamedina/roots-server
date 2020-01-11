@@ -14,7 +14,7 @@
     "deploy": "git push heroku master"
   },
   "keywords": [],
-  "engines" : {
+  "engines": {
     "node": "12.10.0"
   },
   "author": "",
@@ -31,6 +31,7 @@
     "node-fetch": "^2.6.0",
     "path": "^0.12.7",
     "pg": "^7.17.0",
+    "plaid": "^4.3.0",
     "winston": "^3.2.1",
     "xss": "^1.0.6"
   },

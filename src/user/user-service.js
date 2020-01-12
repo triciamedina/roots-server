@@ -111,6 +111,16 @@ const UserService = {
                 UserService.getDonationById(db, donation.id)
             )
     },
+    insertAccessToken(db, newAccessToken) {
+        return db
+            .insert(newAccessToken)
+            .into('roots_access_tokens')
+            .returning('*')
+            .then(([accessToken]) => accessToken)
+            .then(accessToken =>
+                UserService.getTokenById(db, accessToken.id)
+            )
+    }
 }
 
 module.exports = UserService

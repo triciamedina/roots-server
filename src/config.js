@@ -9,5 +9,6 @@ module.exports = {
     CHARITY_API_KEY: process.env.CHARITY_API_KEY || 'change-this-key',
     PLAID_CLIENT_ID: process.env.PLAID_CLIENT_ID,
     PLAID_PUBLIC_KEY: process.env.PLAID_PUBLIC_KEY,
-    PLAID_SECRET: process.env.PLAID_SECRET
+    PLAID_SECRET: process.env.PLAID_SECRET,
+    PLAID_ENV: 'sandbox'
 }

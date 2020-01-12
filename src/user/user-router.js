@@ -8,6 +8,14 @@ const config = require('../config')
 const userRouter = express.Router()
 const bodyParser = express.json()
 
+const plaidClient = new plaid.Client(
+    config.PLAID_CLIENT_ID,
+    config.PLAID_SECRET,
+    config.PLAID_PUBLIC_KEY,
+    plaid.environments[config.PLAID_ENV],
+    {version: '2018-05-22'}
+)
+
 userRouter
     .route('/')
     .post(bodyParser, (req, res, next) => {
@@ -138,23 +146,33 @@ userRouter
     .post((req, res, next) => {
         const { 
             body: {
-                public_token
+                publicToken
             },
             user: { id } // id is set by jwt-auth middleware
         } = req
 
-        const plaidClient = new plaid.Client(
-            config.PLAID_CLIENT_ID,
-            config.PLAID_SECRET,
-            config.PLAID_PUBLIC_KEY,
-            plaid.environments.sandbox,
-            {version: '2018-05-22'}
-        )
-
-        plaidClient.exchangePublicToken(public_token, (err, res) => {
+        plaidClient.exchangePublicToken(publicToken, (err, res) => {
             const { access_token, item_id } = res
             console.log(access_token, item_id)
-           
+            const newAccessToken = {
+                access_token,
+                item_id,
+                user_id: id
+            }
+
+            UserService.insertAccessToken(
+                req.app.get('db'),
+                newAccessToken
+            )
+                .then(res => {
+                    res
+                        .status(201)
+                        next()
+                })
+                .catch(err => {
+                    console.error(err)
+                    next(err)
+                })
         })
     })
 

@@ -18,6 +18,7 @@ app.use(morgan(morganOption))
 app.use(helmet())
 app.use(cors())
 
+app.options('*', cors())
 // app.use(cors({
 //     origin: CLIENT_ORIGIN
 // }))

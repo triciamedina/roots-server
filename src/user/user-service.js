@@ -135,6 +135,21 @@ const UserService = {
         return {
             id: token.id
         }
+    },
+    getAccessTokenForUser(db, user_id) {
+        return db
+            .from('roots_access_tokens AS tokens')
+            .select(
+                'tokens.id',
+                'tokens.access_token',
+                'tokens.item_id',
+                'tokens.account_id'
+            )
+            .where('tokens.user_id', user_id)
+            .first()
+    },
+    getTransactions(accessToken, startDate, endDate, options) {
+        return plaidClient.getTransactions(accessToken, startDate, endDate, options)
     }
 }
 

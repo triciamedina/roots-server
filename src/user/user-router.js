@@ -1,5 +1,6 @@
 const express = require('express')
 const path = require('path')
+const moment = require('moment')
 const UserService = require('./user-service')
 const  { requireAuth } = require('../middleware/jwt-auth')
 
@@ -136,7 +137,8 @@ userRouter
     .post((req, res, next) => {
         const { 
             body: {
-                publicToken
+                publicToken,
+                accountId
             },
             user: { id } // id is set by jwt-auth middleware
         } = req
@@ -156,7 +158,8 @@ userRouter
                 const newAccessToken = {
                     access_token,
                     item_id,
-                    user_id: id
+                    user_id: id,
+                    account_id: accountId
                 }
 
                 return UserService.insertAccessToken(
@@ -171,6 +174,33 @@ userRouter
                     })
         })
         .catch(next)
+    })
+
+userRouter
+    .route('/transaction')
+    .all(requireAuth)
+    .get((req, res, next) => {
+        UserService.getAccessTokenForUser(
+            req.app.get('db'),
+            req.user.id
+        )
+            .then(token => {
+                if (!token) {
+                    return res.status(400).json({
+                        error: `Account does not exist`
+                    })
+                }
+                const accessToken = token.access_token
+                const accountId = token.account_id
+                const today = moment().format('YYYY-MM-DD')
+                const thirtyDaysAgo = moment().subtract(30, 'days').format('YYYY-MM-DD')
+                
+                return UserService.getTransactions(accessToken, thirtyDaysAgo, today, { account_ids: [accountId] })
+                    .then(data => {
+                        res.json(data)
+                    })
+            })
+            .catch(next)
     })
 
 module.exports = userRouter

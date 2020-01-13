@@ -1,6 +1,16 @@
 const xss = require('xss')
 const bcrypt = require('bcryptjs')
+const plaid = require('plaid')
+const config = require('../config')
+
 const REGEX_NUMBER = /^(?=.*\d)[A-Za-z\d]{8,}$/
+const plaidClient = new plaid.Client(
+    config.PLAID_CLIENT_ID,
+    config.PLAID_SECRET,
+    config.PLAID_PUBLIC_KEY,
+    plaid.environments[config.PLAID_ENV],
+    {version: '2018-05-22'}
+)
 
 const UserService = {
     hasUserWithEmail(db, email) {
@@ -111,15 +121,20 @@ const UserService = {
                 UserService.getDonationById(db, donation.id)
             )
     },
+    exchangePublicToken(publicToken) {
+        return plaidClient.exchangePublicToken(publicToken)
+    },
     insertAccessToken(db, newAccessToken) {
         return db
             .insert(newAccessToken)
             .into('roots_access_tokens')
             .returning('*')
-            .then(([accessToken]) => accessToken)
-            .then(accessToken =>
-                UserService.getTokenById(db, accessToken.id)
-            )
+            .then(([token]) => token)
+    },
+    serializeToken(token) {
+        return {
+            id: token.id
+        }
     }
 }
 

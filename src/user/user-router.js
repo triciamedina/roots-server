@@ -194,11 +194,59 @@ userRouter
                 const accountId = token.account_id
                 const today = moment().format('YYYY-MM-DD')
                 const thirtyDaysAgo = moment().subtract(30, 'days').format('YYYY-MM-DD')
-                
+
                 return UserService.getTransactions(accessToken, thirtyDaysAgo, today, { account_ids: [accountId] })
                     .then(data => {
                         res.json(data)
                     })
+            })
+            .catch(next)
+    })
+
+userRouter
+    .route('/roundup')
+    .all(requireAuth)
+    .all(bodyParser)
+    .post((req, res, next) => {
+        const { account_id, amount, date, name, transaction_id } = req.body
+
+        for (const field of ['account_id', 'amount', 'date', 'name', 'transaction_id']) {
+            if (req.body[field] == null) {
+                return res.status(400).json({
+                    error: `Missing '${field}' in request body`
+                })
+            }
+        }
+
+        const newRoundup = {
+            account_id,
+            amount,
+            date,
+            name,
+            transaction_id,
+            user_id: req.user.id
+        }
+
+        UserService.insertRoundup(
+            req.app.get('db'),
+            newRoundup
+        )
+            .then(roundup => {
+                res
+                    .status(201)
+                    .location(path.posix.join(req.originalUrl, `/${roundup.id}`))
+                    .json(UserService.serializeRoundup(roundup))
+            })
+            .catch(next)
+    })
+    .get((req, res, next) => {
+        UserService.getRoundupsForUser(
+            req.app.get('db'),
+            req.user.id 
+        )
+            .then(roundups => {
+                res
+                    .json(roundups.map(UserService.serializeRoundup))
             })
             .catch(next)
     })

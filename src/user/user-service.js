@@ -150,7 +150,39 @@ const UserService = {
     },
     getTransactions(accessToken, startDate, endDate, options) {
         return plaidClient.getTransactions(accessToken, startDate, endDate, options)
-    }
+    },
+    insertRoundup(db, newRoundup) {
+        return db
+            .insert(newRoundup)
+            .into('roots_roundups')
+            .returning('*')
+            .then(([roundup]) => roundup)
+    },
+    serializeRoundup(roundup) {
+        return {
+            id: roundup.id,
+            user_id: roundup.user_id,
+            amount: Number(roundup.amount),
+            date: new Date(roundup.date),
+            name: xss(roundup.name),
+            transaction_id: xss(roundup.transaction_id),
+            created_at: new Date(roundup.created_at)
+        }
+    },
+    getRoundupsForUser(db, user_id) {
+        return db
+            .from('roots_roundups AS roundups')
+            .select(
+                'roundups.id',
+                'roundups.amount',
+                'roundups.amount',
+                'roundups.date',
+                'roundups.name',
+                'roundups.transaction_id',
+                'roundups.created_at'
+            )
+            .where('roundups.user_id', user_id)
+    },
 }
 
 module.exports = UserService

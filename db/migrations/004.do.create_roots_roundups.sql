@@ -6,5 +6,5 @@ CREATE TABLE roots_roundups (
     date TEXT NOT NULL,
     name TEXT NOT NULL,
     transaction_id TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT now() NOT NULL
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );

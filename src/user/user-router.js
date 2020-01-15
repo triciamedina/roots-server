@@ -175,6 +175,21 @@ userRouter
         })
         .catch(next)
     })
+    .get((req, res, next) => {
+        UserService.getAccessTokenForUser(
+            req.app.get('db'),
+            req.user.id
+        )
+            .then(token => {
+                if (!token) {
+                    return res.status(400).json({
+                        error: `Account does not exist`
+                    })
+                }
+                
+                res.json(UserService.serializeToken(token))
+                })
+    })
 
 userRouter
     .route('/transaction')

@@ -9,7 +9,8 @@ const bodyParser = express.json()
 
 userRouter
     .route('/')
-    .post(bodyParser, (req, res, next) => {
+    .all(bodyParser)
+    .post((req, res, next) => {
         const { email, first_name, last_name, password } = req.body
 
         for (const field of ['email', 'first_name', 'last_name', 'password']) {
@@ -68,6 +69,54 @@ userRouter
             })
             .catch(next)
     })
+    .get(requireAuth, (req, res, next) => {
+        UserService.getUser(
+            req.app.get('db'),
+            req.user.id
+        )
+            .then(user => {
+                res
+                    .status(200)
+                    .json(UserService.serializeUser(user))
+            })
+            .catch(next)
+    })
+    .patch(requireAuth, (req, res, next) => {
+        const { autoRoundups } = req.body
+
+        let auto_roundups;
+
+        if (autoRoundups === null) {
+            return res
+                .status(400)
+                .json({
+                    error: `Missing autoRoundups in request body`
+                })
+        };
+
+        if (autoRoundups === true) {
+            auto_roundups = new Date();
+        };
+        if (autoRoundups === false) {
+            auto_roundups = null;
+        };
+
+        const userToUpdate = {
+            auto_roundups
+        };
+    
+        UserService.updateUser(
+            req.app.get('db'),
+            req.user.id,
+            userToUpdate
+        )
+            .then(user => {
+                res
+                    .status(200)
+                    .json(UserService.serializeUser(user[0]))
+            })
+            .catch(next)
+    })
 
 userRouter
     .route('/donation')
@@ -75,14 +124,15 @@ userRouter
     .all(bodyParser)
     .get((req, res, next) => {
         UserService.getDonationsForUser(
-                    req.app.get('db'),
-                    req.user.id // id is set by jwt-auth middleware
-                )
-                    .then(donations => {
-                        res
-                            .json(donations.map(UserService.serializeDonation))
-                    })
-                    .catch(next)
+            req.app.get('db'),
+            req.user.id // id is set by jwt-auth middleware
+        )
+            .then(donations => {
+                res
+                    .status(200)
+                    .json(donations.map(UserService.serializeDonation))
+            })
+            .catch(next)
     })
     .post((req, res, next) => {
         const { 
@@ -182,9 +232,7 @@ userRouter
         )
             .then(token => {
                 if (!token) {
-                    return res.status(400).json({
-                        error: `Account does not exist`
-                    })
+                    return null
                 }
                 
                 res.json(UserService.serializeToken(token))

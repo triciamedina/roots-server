@@ -56,8 +56,20 @@ const UserService = {
             email: xss(user.email),
             first_name: xss(user.first_name),
             last_name: xss(user.last_name),
-            created_at: new Date(user.created_at)
+            created_at: new Date(user.created_at),
+            auto_roundups: (
+                (user.auto_roundups === null)
+                ? null
+                : new Date(user.auto_roundups)
+            )
         }
+    },
+    getUser(db, id) {
+        return db
+            .from('roots_users')
+            .select('*')
+            .where({ id })
+            .then(([user]) => user)
     },
     getDonationsForUser(db, user_id) {
         return db
@@ -183,6 +195,13 @@ const UserService = {
             )
             .where('roundups.user_id', user_id)
     },
+    updateUser(db, id, userToUpdate) {
+        return db
+            .from('roots_users')
+            .where({ id })
+            .update(userToUpdate)
+            .returning('*')
+    }
 }
 
 module.exports = UserService

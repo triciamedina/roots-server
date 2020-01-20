@@ -232,11 +232,11 @@ userRouter
         )
             .then(token => {
                 if (!token) {
-                    return null
+                    res.json({ id: null })
+                } else {
+                    res.json(UserService.serializeToken(token))
                 }
-                
-                res.json(UserService.serializeToken(token))
-                })
+            })
     });
 
 userRouter

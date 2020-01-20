@@ -59,7 +59,7 @@ const UserService = {
             created_at: new Date(user.created_at),
             auto_roundups: (
                 (user.auto_roundups === null)
-                ? null
+                ? false
                 : new Date(user.auto_roundups)
             )
         }

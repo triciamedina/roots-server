@@ -1,9 +1,9 @@
-const config = require('../config')
-const fetch = require('node-fetch')
+const config = require('../config');
+const fetch = require('node-fetch');
 
 const CharityService = {
     getCharities(params) {
-        const queryString = CharityService.formatQueryParams(params)
+        const queryString = CharityService.formatQueryParams(params);
 
         return config.CHARITY_URLS.map(charity => {
             const url = charity + '?' + queryString
@@ -14,13 +14,14 @@ const CharityService = {
                     }
                     throw new Error(response.statusText)
                 })
-        })
+        });
     },
     formatQueryParams(params) {
         const queryItems = Object.keys(params)
-            .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+            .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
+            
         return queryItems.join('&');
     }
-}
+};
 
-module.exports = CharityService
+module.exports = CharityService;

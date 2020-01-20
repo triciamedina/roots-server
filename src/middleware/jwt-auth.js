@@ -1,9 +1,9 @@
-const AuthService = require('../auth/auth-service')
+const AuthService = require('../auth/auth-service');
 
 function requireAuth(req, res, next) {
-    const authToken = req.get('Authorization') || ''
+    const authToken = req.get('Authorization') || '';
 
-    let bearerToken
+    let bearerToken;
 
     if (!authToken.toLowerCase().startsWith('bearer ')) {
         return res
@@ -13,10 +13,10 @@ function requireAuth(req, res, next) {
             })
     } else {
         bearerToken = authToken.slice(7, authToken.length)
-    }
+    };
     
     try {
-        const payload = AuthService.verifyJwt(bearerToken)
+        const payload = AuthService.verifyJwt(bearerToken);
 
         AuthService.getUserWithEmail(
             req.app.get('db'),
@@ -44,8 +44,8 @@ function requireAuth(req, res, next) {
                 error: 'Unauthorized request'
             })
     }
-}
+};
 
 module.exports = {
     requireAuth,
-}
+};

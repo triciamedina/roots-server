@@ -1,17 +1,17 @@
-const express = require('express')
-const path = require('path')
-const moment = require('moment')
-const UserService = require('./user-service')
-const  { requireAuth } = require('../middleware/jwt-auth')
+const express = require('express');
+const path = require('path');
+const moment = require('moment');
+const UserService = require('./user-service');
+const  { requireAuth } = require('../middleware/jwt-auth');
 
-const userRouter = express.Router()
-const bodyParser = express.json()
+const userRouter = express.Router();
+const bodyParser = express.json();
 
 userRouter
     .route('/')
     .all(bodyParser)
     .post((req, res, next) => {
-        const { email, first_name, last_name, password } = req.body
+        const { email, first_name, last_name, password } = req.body;
 
         for (const field of ['email', 'first_name', 'last_name', 'password']) {
             if (!req.body[field]) {
@@ -21,9 +21,9 @@ userRouter
                         error: `Missing '${field}' in request body`
                     })
             }
-        }
+        };
 
-        const passwordError = UserService.validatePassword(password)
+        const passwordError = UserService.validatePassword(password);
 
         if (passwordError) {
             return res
@@ -31,7 +31,7 @@ userRouter
                 .json({ 
                     error: passwordError
                 })
-        }
+        };
 
         UserService.hasUserWithEmail(
             req.app.get('db'),
@@ -44,7 +44,7 @@ userRouter
                         .json({ 
                             error: `Account with this email already exists` 
                         })
-                }
+                };
                 
                 return UserService.hashPassword(password)
                     .then(hashedPassword => {
@@ -53,7 +53,7 @@ userRouter
                             password: hashedPassword,
                             first_name,
                             last_name,
-                        }
+                        };
                         
                         return UserService.insertUser(
                             req.app.get('db'),
@@ -82,7 +82,7 @@ userRouter
             .catch(next)
     })
     .patch(requireAuth, (req, res, next) => {
-        const { autoRoundups } = req.body
+        const { autoRoundups } = req.body;
 
         let auto_roundups;
 
@@ -116,7 +116,7 @@ userRouter
                     .json(UserService.serializeUser(user[0]))
             })
             .catch(next)
-    })
+    });
 
 userRouter
     .route('/donation')
@@ -144,8 +144,8 @@ userRouter
                 school_name, 
                 image_url
             },
-            user: { id } // id is set by jwt-auth middleware
-        } = req
+            user: { id } 
+        } = req;
 
         // TODO: check that provided values are valid
 
@@ -155,7 +155,7 @@ userRouter
                     error: `Missing '${field}' in request body`
                 })
             }
-        }
+        };
 
         const newDonation = { 
             amount, 
@@ -165,7 +165,7 @@ userRouter
             school_name, 
             image_url,
             user_id: id
-        }
+        };
 
         UserService.insertDonation(
             req.app.get('db'),
@@ -178,7 +178,7 @@ userRouter
                     .json(UserService.serializeDonation(donation))
             })
             .catch(next)
-    })
+    });
 
 userRouter
     .route('/account')
@@ -191,7 +191,7 @@ userRouter
                 accountId
             },
             user: { id } // id is set by jwt-auth middleware
-        } = req
+        } = req;
 
         for (const field of ['publicToken']) {
             if (req.body[field] == null) {
@@ -199,18 +199,18 @@ userRouter
                     error: `Missing '${field}' in request body`
                 })
             }
-        }
+        };
 
         UserService.exchangePublicToken(publicToken)
             .then(response =>  {
-                
-                const { access_token, item_id } = response
+                const { access_token, item_id } = response;
+
                 const newAccessToken = {
                     access_token,
                     item_id,
                     user_id: id,
                     account_id: accountId
-                }
+                };
 
                 return UserService.insertAccessToken(
                     req.app.get('db'),
@@ -237,7 +237,7 @@ userRouter
                 
                 res.json(UserService.serializeToken(token))
                 })
-    })
+    });
 
 userRouter
     .route('/transaction')
@@ -252,11 +252,11 @@ userRouter
                     return res.status(400).json({
                         error: `Account does not exist`
                     })
-                }
-                const accessToken = token.access_token
-                const accountId = token.account_id
-                const today = moment().format('YYYY-MM-DD')
-                const thirtyDaysAgo = moment().subtract(30, 'days').format('YYYY-MM-DD')
+                };
+                const accessToken = token.access_token;
+                const accountId = token.account_id;
+                const today = moment().format('YYYY-MM-DD');
+                const thirtyDaysAgo = moment().subtract(30, 'days').format('YYYY-MM-DD');
 
                 return UserService.getTransactions(accessToken, thirtyDaysAgo, today, { account_ids: [accountId] })
                     .then(data => {
@@ -264,14 +264,14 @@ userRouter
                     })
             })
             .catch(next)
-    })
+    });
 
 userRouter
     .route('/roundup')
     .all(requireAuth)
     .all(bodyParser)
     .post((req, res, next) => {
-        const { account_id, amount, date, name, transaction_id } = req.body
+        const { account_id, amount, date, name, transaction_id } = req.body;
 
         for (const field of ['account_id', 'amount', 'date', 'name', 'transaction_id']) {
             if (req.body[field] == null) {
@@ -279,7 +279,7 @@ userRouter
                     error: `Missing '${field}' in request body`
                 })
             }
-        }
+        };
 
         const newRoundup = {
             account_id,
@@ -288,7 +288,7 @@ userRouter
             name,
             transaction_id,
             user_id: req.user.id
-        }
+        };
 
         UserService.insertRoundup(
             req.app.get('db'),
@@ -312,6 +312,6 @@ userRouter
                     .json(roundups.map(UserService.serializeRoundup))
             })
             .catch(next)
-    })
+    });
 
-module.exports = userRouter
+module.exports = userRouter;

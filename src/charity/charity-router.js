@@ -8,7 +8,7 @@ const charityRouter = express.Router();
 charityRouter
     .route('/')
     .get(requireAuth, (req, res, next) => {
-        const { zip, max, index } = req.query;
+        const { zip, max, index, showSynopsis } = req.query;
 
         for (const field of ['zip', 'max', 'index']) {
             if (req.query[field] == null) {
@@ -22,7 +22,8 @@ charityRouter
             APIKey: config.CHARITY_API_KEY,
             zip,
             max,
-            index
+            index,
+            showSynopsis
         };
 
         const charities = CharityService.getCharities(params);

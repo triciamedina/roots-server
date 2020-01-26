@@ -37,7 +37,8 @@ describe('Charity Endpoints', function() {
                 const testQuery = {
                     zip: 94804,
                     max: 10,
-                    index: 0
+                    index: 0,
+                    showSynopsis: true,
                 };
 
                 return supertest(app)
@@ -66,7 +67,8 @@ describe('Charity Endpoints', function() {
                                 'schoolName',
                                 'city',
                                 'zip',
-                                'state'
+                                'state',
+                                'synopsis',
                             )
                         }
                     });

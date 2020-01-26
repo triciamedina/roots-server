@@ -10,7 +10,7 @@ charityRouter
     .get(requireAuth, (req, res, next) => {
         const { zip, max, index, showSynopsis } = req.query;
 
-        for (const field of ['zip', 'max', 'index']) {
+        for (const field of ['zip', 'max', 'index', 'showSynopsis']) {
             if (req.query[field] == null) {
                 return res.status(400).json({
                     error: `Missing '${field}' in request query`

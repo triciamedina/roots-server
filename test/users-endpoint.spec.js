@@ -485,44 +485,7 @@ describe('Users Endpoints', function() {
         })
     });
 
-    // describe(`POST /api/user/account`, () => { 
-    //     context('Happy path', () => {
-    //         beforeEach('insert users', () =>
-    //             helpers.seedUsers(
-    //                 db, 
-    //                 testUsers,
-    //             )
-    //         );
-
-    //         it.only('responds 201, serialized token', () => {
-    //             helpers.createPublicToken().then(res => {
-    //                 const public_token = res.public_token
-                    
-    //                 helpers.exchangePublicToken(public_token).then(res => 
-    //                     helpers.getAccounts(res.access_token).then(res => {
-    //                         console.log(public_token, res.accounts[0].account_id)
-    //                         const requestBody = {
-    //                             publicToken: public_token,
-    //                             accountId: res.accounts[0].account_id
-    //                         }
-                            
-    //                         return supertest(app)
-    //                             .post('/api/user/account')
-    //                             .set({'Authorization': token})
-    //                             .send(requestBody)
-    //                             .expect(201)
-    //                     })
-    //                 )
-    //             })
-    //         })
-    //     })
-    // });
-
     // describe(`GET /api/user/account`, () => { 
-
-    // });
-
-    // describe(`GET /api/user/transaction`, () => { 
 
     // });
 });

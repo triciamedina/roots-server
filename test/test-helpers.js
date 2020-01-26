@@ -91,11 +91,33 @@ function makeRoundupsArray() {
     ];
 };
 
+function makeAccessTokensArray() {
+    return [
+        {
+            id: 1,
+            user_id: 1,
+            access_token: 'Test Access Token 1',
+            item_id: 'Test Access Token 1 Item Id',
+            account_id: 'Test Access Token 1 Account Id',
+            created_at: new Date('2029-01-22T16:28:32.615Z'),
+        },
+        {
+            id: 2,
+            user_id: 2,
+            access_token: 'Test Access Token 2',
+            item_id: 'Test Access Token 2 Item Id',
+            account_id: 'Test Access Token 2 Account Id',
+            created_at: new Date('2029-01-22T16:28:32.615Z'),
+        },
+    ];
+};
+
 function makeRootsFixtures() {
     const testUsers = makeUsersArray();
     const testDonations = makeDonationsArray();
     const testRoundups = makeRoundupsArray();
-    return { testUsers, testDonations, testRoundups };
+    const testAccessTokens = makeAccessTokensArray();
+    return { testUsers, testDonations, testRoundups, testAccessTokens };
 };
 
 function cleanTables(db) {
@@ -103,9 +125,10 @@ function cleanTables(db) {
         trx.raw(
             `   
             BEGIN;
-            TRUNCATE TABLE roots_users;
-            TRUNCATE TABLE roots_donations;
-            TRUNCATE TABLE roots_roundups;
+            TRUNCATE TABLE roots_donations CASCADE;
+            TRUNCATE TABLE roots_roundups CASCADE;
+            TRUNCATE TABLE roots_access_tokens CASCADE;
+            TRUNCATE TABLE roots_users CASCADE;
             COMMIT;
             `
         )
@@ -117,6 +140,8 @@ function cleanTables(db) {
                 trx.raw(`SELECT setval('roots_donations_id_seq', 0)`),
                 trx.raw(`ALTER SEQUENCE roots_roundups_id_seq minvalue 0 START WITH 1`),
                 trx.raw(`SELECT setval('roots_roundups_id_seq', 0)`),
+                trx.raw(`ALTER SEQUENCE roots_access_tokens_id_seq minvalue 0 START WITH 1`),
+                trx.raw(`SELECT setval('roots_access_tokens_id_seq', 0)`),
             ])
         )
     )
@@ -153,6 +178,16 @@ function seedRoundups(db, roundups) {
             db.raw(
                 `SELECT setval('roots_roundups_id_seq', ?)`,
                 [roundups[roundups.length - 1].id],
+            )
+        )
+};
+
+function seedAcessTokens(db, tokens) {
+    return db.into('roots_access_tokens').insert(tokens)
+        .then(() =>
+            db.raw(
+                `SELECT setval('roots_access_tokens_id_seq', ?)`,
+                [tokens[tokens.length - 1].id],
             )
         )
 };
@@ -242,5 +277,6 @@ module.exports = {
     seedRoundups,
     createPublicToken,
     exchangePublicToken,
-    getAccounts
+    getAccounts,
+    seedAcessTokens,
 }

@@ -234,7 +234,9 @@ userRouter
                 if (!token) {
                     res.json({ id: null })
                 } else {
-                    res.json(UserService.serializeToken(token))
+                    res
+                        .status(200)
+                        .json(UserService.serializeToken(token))
                 }
             })
     });

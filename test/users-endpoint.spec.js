@@ -7,9 +7,10 @@ const jwt = require('jsonwebtoken');
 describe('Users Endpoints', function() {
     let db;
 
-    const { testUsers, testDonations, testRoundups } = helpers.makeRootsFixtures();
+    const { testUsers, testDonations, testRoundups, testAccessTokens } = helpers.makeRootsFixtures();
     const testUser = testUsers[0];
-    const token = helpers.makeAuthHeader(testUser)
+    const testAccessToken = testAccessTokens[0];
+    const token = helpers.makeAuthHeader(testUser);
 
     before('make knex instance', () => {
         db = knex({
@@ -485,7 +486,36 @@ describe('Users Endpoints', function() {
         })
     });
 
-    // describe(`GET /api/user/account`, () => { 
+    describe(`GET /api/user/account`, () => { 
+        context('Happy path', () => {
+            beforeEach('insert users', () =>
+                helpers.seedUsers(
+                    db, 
+                    testUsers,
+                )
+            );
 
-    // });
+            beforeEach('insert access tokens', () =>
+                helpers.seedAcessTokens(
+                    db, 
+                    testAccessTokens,
+                )
+            );
+
+            it('responds 200, serialized token', () => {
+                return supertest(app)
+                    .get('/api/user/account')
+                    .set({'Authorization': token})
+                    .expect(200)
+                    .expect(res => {
+                        expect(res.body.id).to.eql(testAccessToken.id)
+                        expect(res.body).to.not.have.property('user_id')
+                        expect(res.body).to.not.have.property('access_token')
+                        expect(res.body).to.not.have.property('item_id')
+                        expect(res.body).to.not.have.property('account_id')
+                        expect(res.body).to.not.have.property('created_at')
+                    })
+            })
+        });
+    });
 });

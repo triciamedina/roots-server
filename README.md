@@ -42,6 +42,5 @@ Run the tests `npm test`
 
 ## Built With
 - [Plaid API](https://plaid.com/docs/)
-- [React](https://reactjs.org/)
+- [Donors Choose API](https://data.donorschoose.org/docs/overview/)
 - [Moment.js](https://momentjs.com/)
-- [Dinero.js](https://sarahdayan.github.io/dinero.js/)

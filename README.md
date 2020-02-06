@@ -43,7 +43,7 @@ Run the tests `npm test`
 ## Built With
 - [Plaid API](https://plaid.com/docs/)
 - [Donors Choose API](https://data.donorschoose.org/docs/overview/)
-- [Node] (https://nodejs.org/en/docs/)
-- [Express] (https://expressjs.com/)
-- [PostgreSQL] (https://www.postgresql.org/)
+- [Node](https://nodejs.org/en/docs/)
+- [Express](https://expressjs.com/)
+- [PostgreSQL](https://www.postgresql.org/)
 - [Moment.js](https://momentjs.com/)

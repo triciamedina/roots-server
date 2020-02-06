@@ -40,6 +40,8 @@ Start nodemon for the application `npm run dev`
 
 Run the tests `npm test`
 
-## Deploying
-
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push this remote's master branch.
+## Built With
+- [Plaid API](https://plaid.com/docs/)
+- [React](https://reactjs.org/)
+- [Moment.js](https://momentjs.com/)
+- [Dinero.js](https://sarahdayan.github.io/dinero.js/)

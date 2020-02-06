@@ -1,6 +1,6 @@
-# Express Boilerplate!
+# Roots REST API
 
-This is a boilerplate project used for starting new projects!
+The REST API for [Roots](https://github.com/triciamedina/roots-app).
 
 ## Set up
 

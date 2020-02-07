@@ -29,7 +29,7 @@ Status: 200 OK
 }
 ```
 
-## Add a new user
+## Create a user
 
 ### Request
 
@@ -61,7 +61,7 @@ Status: 201 Created
 }
 ```
 
-## Get a single authenticated user
+## Fetch a user
 
 Requires user authentication. Lists public and private profile information when authenticated through JWT auth.
 
@@ -82,6 +82,76 @@ Status: 200 OK
     "created_at": "2020-02-07T08:46:15.501Z",
     "auto_roundups": null
 }
+```
+
+## Update a user
+
+Requires user authentication. Currently supports updating a user’s automatic roundups preference.
+
+### Request
+
+`PATCH /api/user`
+
+### Parameters
+
+```
+{
+	"autoRoundups": true
+}
+```
+
+### Response
+
+```
+Status: 200 OK
+
+{
+    "id": 1,
+    "email": "test@test.com",
+    "first_name": "Test",
+    "last_name": "LastName",
+    "created_at": "2020-02-07T08:46:15.501Z",
+    "auto_roundups": "2020-02-07T05:16:17.588Z"
+}
+```
+
+## Fetch all donations for a user
+
+Requires user authentication.
+
+### Request
+
+`GET /api/user/donation`
+
+### Response
+
+```
+Status: 200 OK
+
+[
+    {
+        "id": 1,
+        "year": 2020,
+        "donated_on": "2020-02-07T13:23:12.378Z",
+        "amount": 10,
+        "project_name": "My classroom project",
+        "project_description": "Help make our classroom great",
+        "project_url": "https://www.GreatProject.com",
+        "school_name": "Park Elementary",
+        "image_url": "https://www.GreatProject.com/1234.jpg"
+    },
+    {
+        "id": 2,
+        "year": 2020,
+        "donated_on": "2020-02-05T13:23:12.378Z",
+        "amount": 1.99,
+        "project_name": "Another Project",
+        "project_description": "Our classroom is the greatest",
+        "project_url": "https://www.MyProject.com",
+        "school_name": "Prairie Elementary",
+        "image_url": "https://www.MyProject.com/1234.jpg"
+    }
+]
 ```
 
 ## Getting Started

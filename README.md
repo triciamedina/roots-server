@@ -4,8 +4,6 @@ The REST API for [Roots](https://github.com/triciamedina/roots-app).
 
 ## Login
 
-### Request
-
 `POST /api/auth/login`
 
 ### Parameters
@@ -24,8 +22,6 @@ The REST API for [Roots](https://github.com/triciamedina/roots-app).
     }
 
 ## Add a new user
-
-### Request
 
 `POST /api/user`
 
@@ -54,8 +50,6 @@ The REST API for [Roots](https://github.com/triciamedina/roots-app).
 ## Get a single authenticated user
 
 Lists public and private profile information when authenticated through JWT auth
-
-### Request
 
 `GET /api/user`
 

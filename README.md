@@ -532,6 +532,116 @@ Status: 200 OK
 }
 ```
 
+## Create a round up for a user
+
+Requires user authentication.
+
+### Request
+
+`POST /api/user/roundup`
+
+### Parameters
+
+```
+{
+	"account_id": "aZGl1BZAW3uvgp7y3zdbU1Ld3zKv3WF7aZbgG", 
+	"amount": 4.33, 
+	"date": "2020-01-13", 
+	"name": "Starbucks", 
+	"transaction_id": "WxA9aLxZQ4C5m8wraA6PFMopNx8163ulRj6Rn"
+}
+```
+
+### Response
+
+```
+Status: 201 Created
+
+{
+    "id": 1,
+    "user_id": 1,
+    "amount": 4.33,
+    "date": "2020-01-13T00:00:00.000Z",
+    "name": "Starbucks",
+    "transaction_id": "WxA9aLxZQ4C5m8wraA6PFMopNx8163ulRj6Rn",
+    "created_at": "2020-02-07T06:06:12.333Z"
+}
+```
+
+## Fetch all round ups for a user
+
+Requires user authentication.
+
+### Request
+
+`GET /api/user/roundup`
+
+
+### Response
+
+```
+Status: 200 OK
+
+[
+    {
+        "id": 1,
+        "amount": 4.33,
+        "date": "2020-01-13T00:00:00.000Z",
+        "name": "Starbucks",
+        "transaction_id": "WxA9aLxZQ4C5m8wraA6PFMopNx8163ulRj6Rn",
+        "created_at": "2020-02-07T06:06:12.333Z"
+    },
+    {
+        "id": 2,
+        "amount": 89.4,
+        "date": "2020-01-13T00:00:00.000Z",
+        "name": "SparkFun",
+        "transaction_id": "APWmLxPgG9fZM5jq37AGUNj1KoDyq7f18598z",
+        "created_at": "2020-02-07T06:06:12.333Z"
+    },
+]
+```
+
+## Fetch charities
+
+No authentication required
+
+### Request
+
+`GET /api/charity`
+
+### Path Parameters
+
+`zip` 5-digit zip code
+`index` By default, the start index of the result set is 0
+`max` By default, the maximum number of projects returned is 10
+`showSynposis` To show the synopsis for each project listing set this to true
+
+### Response
+
+```
+Status: 200 OK
+
+[
+    {
+        "id": 1,
+        "amount": 4.33,
+        "date": "2020-01-13T00:00:00.000Z",
+        "name": "Starbucks",
+        "transaction_id": "WxA9aLxZQ4C5m8wraA6PFMopNx8163ulRj6Rn",
+        "created_at": "2020-02-07T06:06:12.333Z"
+    },
+    {
+        "id": 2,
+        "amount": 89.4,
+        "date": "2020-01-13T00:00:00.000Z",
+        "name": "SparkFun",
+        "transaction_id": "APWmLxPgG9fZM5jq37AGUNj1KoDyq7f18598z",
+        "created_at": "2020-02-07T06:06:12.333Z"
+    },
+]
+```
+
 ## Getting Started
 
 ### Installing

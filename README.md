@@ -14,8 +14,8 @@ Returns a JWT allowing the user to access routes, services, and resources that a
 
 ```
 {
-	"email": "test@test.com",
-	"password": "mypassword01"
+    "email": "test@test.com",
+    "password": "mypassword01"
 }
 ```
 
@@ -25,7 +25,7 @@ Returns a JWT allowing the user to access routes, services, and resources that a
 Status: 200 OK
 
 {
-	"authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE1ODEwMzY4NzMsInN1YiI6InRlc3RAdGVzdC5jb20ifQ.IHOl95oC2-MtDaEZH58_uN4a6Lu2oCWx-oTsEN1Uyok"
+    "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE1ODEwMzY4NzMsInN1YiI6InRlc3RAdGVzdC5jb20ifQ.IHOl95oC2-MtDaEZH58_uN4a6Lu2oCWx-oTsEN1Uyok"
 }
 ```
 
@@ -39,10 +39,10 @@ Status: 200 OK
 
 ```
 {
-	"email": "test@test.com",
-	"first_name": "FirstName",
-	"last_name": "LastName",
-	"password": "mypassword01"
+    "email": "test@test.com",
+    "first_name": "FirstName",
+    "last_name": "LastName",
+    "password": "mypassword01"
 }
 ```
 
@@ -52,12 +52,12 @@ Status: 200 OK
 Status: 201 Created
 
 {
-	"id": 1,
-	"email": "test@test.com",
-	"first_name": "Test",
-	"last_name": "LastName",
-	"created_at": "2020-02-07T08:46:15.501Z",
-	"auto_roundups": null
+    "id": 1,
+    "email": "test@test.com",
+    "first_name": "Test",
+    "last_name": "LastName",
+    "created_at": "2020-02-07T08:46:15.501Z",
+    "auto_roundups": null
 }
 ```
 
@@ -75,12 +75,12 @@ Requires user authentication. Lists public and private profile information when 
 Status: 200 OK
 
 {
-	"id": 1,
-	"email": "test@test.com",
-	"first_name": "Test",
-	"last_name": "LastName",
-	"created_at": "2020-02-07T08:46:15.501Z",
-	"auto_roundups": null
+    "id": 1,
+    "email": "test@test.com",
+    "first_name": "Test",
+    "last_name": "LastName",
+    "created_at": "2020-02-07T08:46:15.501Z",
+    "auto_roundups": null
 }
 ```
 
@@ -96,7 +96,7 @@ Requires user authentication. Currently supports updating a user’s automatic r
 
 ```
 {
-	"autoRoundups": true
+    "autoRoundups": true
 }
 ```
 
@@ -106,12 +106,12 @@ Requires user authentication. Currently supports updating a user’s automatic r
 Status: 200 OK
 
 {
-	"id": 1,
-	"email": "test@test.com",
-	"first_name": "Test",
-	"last_name": "LastName",
-	"created_at": "2020-02-07T08:46:15.501Z",
-	"auto_roundups": "2020-02-07T05:16:17.588Z"
+    "id": 1,
+    "email": "test@test.com",
+    "first_name": "Test",
+    "last_name": "LastName",
+    "created_at": "2020-02-07T08:46:15.501Z",
+    "auto_roundups": "2020-02-07T05:16:17.588Z"
 }
 ```
 
@@ -166,12 +166,12 @@ Requires user authentication.
 
 ```
 {
-	"amount": 10, 
-	"project_name": "My classroom project", 
-	"project_description": "Help make our classroom great", 
-	"project_url": "https://www.GreatProject.com", 
-	"school_name": "Park Elementary", 
-	"image_url": "https://www.GreatProject.com/1234.jpg"
+    "amount": 10, 
+    "project_name": "My classroom project", 
+    "project_description": "Help make our classroom great", 
+    "project_url": "https://www.GreatProject.com", 
+    "school_name": "Park Elementary", 
+    "image_url": "https://www.GreatProject.com/1234.jpg"
 }
 ```
 
@@ -181,14 +181,14 @@ Requires user authentication.
 Status: 201 Created
 
 {
-	"id": 1,
-	"donated_on": "2020-02-07T13:23:12.378Z",
-	"amount": 10,
-	"project_name": "My classroom project",
-	"project_description": "Help make our classroom great",
-	"project_url": "https://www.GreatProject.com",
-	"school_name": "Park Elementary",
-	"image_url": "https://www.GreatProject.com/1234.jpg"
+    "id": 1,
+    "donated_on": "2020-02-07T13:23:12.378Z",
+    "amount": 10,
+    "project_name": "My classroom project",
+    "project_description": "Help make our classroom great",
+    "project_url": "https://www.GreatProject.com",
+    "school_name": "Park Elementary",
+    "image_url": "https://www.GreatProject.com/1234.jpg"
 }
 ```
 

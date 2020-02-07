@@ -61,15 +61,15 @@ Lists public and private profile information when authenticated through JWT auth
 
 ### Response
 
-    Status: 201 Created
+    Status: 200 OK
 
     {
-        "id": 1,
-        "email": "test@test.com",
-        "first_name": "Test",
-        "last_name": "LastName",
-        "created_at": "2020-02-07T08:46:15.501Z",
-        "auto_roundups": null
+    "id": 1,
+    "email": "test@test.com",
+    "first_name": "Test",
+    "last_name": "LastName",
+    "created_at": "2020-02-07T08:46:15.501Z",
+    "auto_roundups": null
     }
 
 ## Getting Started

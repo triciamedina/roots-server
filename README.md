@@ -21,21 +21,25 @@ The REST API for [Roots](https://github.com/triciamedina/roots-app).
 
     []
 
-## Set up
+## Getting Started
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECT-NAME`
-2. `cd` into the cloned repository
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+### Installing
 
-## Scripts
+Clone the repository and download dependencies.
 
-Start the application `npm start`
+```
+$ git clone https://github.com/triciamedina/roots-server.git
+$ cd roots-app
+$ npm install
+```
 
-Start nodemon for the application `npm run dev`
+### Testing
 
-Run the tests `npm test`
+Run tests with Mocha, Chai, and SuperTest.
+
+```
+$ npm run test
+```
 
 ## Built With
 - [Plaid API](https://plaid.com/docs/)

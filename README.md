@@ -51,6 +51,27 @@ The REST API for [Roots](https://github.com/triciamedina/roots-app).
         "auto_roundups": null
     }
 
+## Get a single authenticated user
+
+Lists public and private profile information when authenticated through JWT auth
+
+### Request
+
+`GET /api/user`
+
+### Response
+
+    Status: 201 Created
+
+    {
+        "id": 1,
+        "email": "test@test.com",
+        "first_name": "Test",
+        "last_name": "LastName",
+        "created_at": "2020-02-07T08:46:15.501Z",
+        "auto_roundups": null
+    }
+
 ## Getting Started
 
 ### Installing

@@ -17,14 +17,16 @@ The REST API for [Roots](https://github.com/triciamedina/roots-app).
 
 ### Response
 
-    HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:30 GMT
-    Status: 200 OK
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 2
+    Status: 201 Created
 
-    []
+    {
+        "id": 1,
+        "email": "test@test.com",
+        "first_name": "Test",
+        "last_name": "LastName",
+        "created_at": "2020-02-07T08:46:15.501Z",
+        "auto_roundups": null
+    }
 
 ## Getting Started
 

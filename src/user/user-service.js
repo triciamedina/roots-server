@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 const plaid = require('plaid')
 const config = require('../config')
 
-const REGEX_NUMBER = /^(?=.*\d)[A-Za-z\d]{8,}$/
+const REGEX_INCLUDES_NUMBER = /\d/
 const plaidClient = new plaid.Client(
     config.PLAID_CLIENT_ID,
     config.PLAID_SECRET,
@@ -42,7 +42,7 @@ const UserService = {
         if (password.startsWith(' ') || password.endsWith(' ')) {
             return 'Password must not start or end with empty spaces'
         }
-        if (!REGEX_NUMBER.test(password)) {
+        if (!REGEX_INCLUDES_NUMBER.test(password)) {
             return 'Password must contain at least 1 number'
         }
         return null

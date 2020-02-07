@@ -6,13 +6,36 @@ The REST API for [Roots](https://github.com/triciamedina/roots-app).
 
 ### Request
 
-`POST /api/login/`
+`POST /api/auth/login`
 
 ### Parameters
 
 | Name | Type | Description |
 | ----------- | ----------- | ----------- | 
 | `email` | `string` | Required |
+| `password` | `string` | Required |
+
+### Response
+
+    Status: 200 OK
+
+    {
+        "authToken":                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE1ODEwMzY4NzMsInN1YiI6InRlc3RAdGVzdC5jb20ifQ.IHOl95oC2-MtDaEZH58_uN4a6Lu2oCWx-oTsEN1Uyok"
+    }
+
+## Add a new user
+
+### Request
+
+`POST /api/user`
+
+### Parameters
+
+| Name | Type | Description |
+| ----------- | ----------- | ----------- | 
+| `email` | `string` | Required |
+| `first_name` | `string` | Required |
+| `last_name` | `string` | Required |
 | `password` | `string` | Required |
 
 ### Response

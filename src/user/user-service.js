@@ -88,11 +88,7 @@ const UserService = {
                 )
             )
             .where('donations.user_id', user_id)
-            // .groupBy('year', 'donations.id')
             .orderBy('donations.donated_on', 'desc')
-            //  select datepart(yyyy, [donations.donated_on]) as [year] (creating calculated column)
-            //  order by date descending
-            //  group by year
     },
     serializeDonation(donation) {
         return {

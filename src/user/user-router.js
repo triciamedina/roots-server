@@ -147,8 +147,6 @@ userRouter
             user: { id } 
         } = req;
 
-        // TODO: check that provided values are valid
-
         for (const field of ['amount', 'project_name', 'project_description', 'project_url', 'school_name', 'image_url']) {
             if (req.body[field] == null) {
                 return res.status(400).json({

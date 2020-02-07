@@ -8,12 +8,16 @@ The REST API for [Roots](https://github.com/triciamedina/roots-app).
 
 `POST /api/auth/login`
 
-### Parameters
+#### Parameters
 
 | Name | Type | Description |
 | ----------- | ----------- | ----------- | 
 | `email` | `string` | Required |
 | `password` | `string` | Required |
+
+#### Headers
+
+http://localhost:8000/api/user
 
 ### Response
 

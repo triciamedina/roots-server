@@ -4,16 +4,20 @@ The REST API for [Roots](https://github.com/triciamedina/roots-app).
 
 ## Login
 
+Returns a JWT allowing the user to access routes, services, and resources that are permitted with that token.
+
 ### Request
 
 `POST /api/auth/login`
 
 ### Parameters
 
-| Name | Type | Description |
-| ----------- | ----------- | ----------- | 
-| `email` | `string` | Required |
-| `password` | `string` | Required |
+```
+{
+    "email": "test@test.com",
+    "password": "mypassword01"
+}
+```
 
 ### Response
 
@@ -33,29 +37,33 @@ Status: 200 OK
 
 ### Parameters
 
-| Name | Type | Description |
-| ----------- | ----------- | ----------- | 
-| `email` | `string` | Required |
-| `first_name` | `string` | Required |
-| `last_name` | `string` | Required |
-| `password` | `string` | Required |
+```
+{
+    "email": "test@test.com",
+    "first_name": "FirstName",
+    "last_name": "LastName",
+    "password": "mypassword01"
+}
+```
 
 ### Response
 
-    Status: 201 Created
+```
+Status: 201 Created
 
-    {
-        "id": 1,
-        "email": "test@test.com",
-        "first_name": "Test",
-        "last_name": "LastName",
-        "created_at": "2020-02-07T08:46:15.501Z",
-        "auto_roundups": null
-    }
+{
+    "id": 1,
+    "email": "test@test.com",
+    "first_name": "Test",
+    "last_name": "LastName",
+    "created_at": "2020-02-07T08:46:15.501Z",
+    "auto_roundups": null
+}
+```
 
 ## Get a single authenticated user
 
-Lists public and private profile information when authenticated through JWT auth
+Requires user authentication. Lists public and private profile information when authenticated through JWT auth.
 
 ### Request
 
@@ -63,16 +71,18 @@ Lists public and private profile information when authenticated through JWT auth
 
 ### Response
 
-    Status: 200 OK
+```
+Status: 200 OK
 
-    {
+{
     "id": 1,
     "email": "test@test.com",
     "first_name": "Test",
     "last_name": "LastName",
     "created_at": "2020-02-07T08:46:15.501Z",
     "auto_roundups": null
-    }
+}
+```
 
 ## Getting Started
 

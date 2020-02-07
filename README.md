@@ -604,7 +604,7 @@ Status: 200 OK
 
 ## Fetch charities
 
-No authentication required
+Requires user authentication.
 
 ### Request
 
@@ -612,9 +612,14 @@ No authentication required
 
 ### Path Parameters
 
+`APIKey` <DonorsChoose.org API KEY>
+
 `zip` 5-digit zip code
+
 `index` By default, the start index of the result set is 0
+
 `max` By default, the maximum number of projects returned is 10
+
 `showSynposis` To show the synopsis for each project listing set this to true
 
 ### Response
@@ -622,24 +627,116 @@ No authentication required
 ```
 Status: 200 OK
 
-[
-    {
-        "id": 1,
-        "amount": 4.33,
-        "date": "2020-01-13T00:00:00.000Z",
-        "name": "Starbucks",
-        "transaction_id": "WxA9aLxZQ4C5m8wraA6PFMopNx8163ulRj6Rn",
-        "created_at": "2020-02-07T06:06:12.333Z"
-    },
-    {
-        "id": 2,
-        "amount": 89.4,
-        "date": "2020-01-13T00:00:00.000Z",
-        "name": "SparkFun",
-        "transaction_id": "APWmLxPgG9fZM5jq37AGUNj1KoDyq7f18598z",
-        "created_at": "2020-02-07T06:06:12.333Z"
-    },
-]
+{
+    "data": [
+        {
+            "searchTerms": "Most urgent",
+            "searchURL": "https://www.donorschoose.org/donors/search.html?zip=94804&showSynopsis=true&utm_source=api&utm_medium=feed&utm_content=searchlink&utm_campaign=DONORSCHOOSE",
+            "totalProposals": "50015",
+            "index": "0",
+            "max": "10",
+            "breadcrumb": [
+                [
+                    "zip",
+                    "94804",
+                    ""
+                ],
+                [
+                    "max",
+                    "10",
+                    ""
+                ]
+            ],
+            "latitude": 37.92363357543945,
+            "longitude": -122.3443374633789,
+            "proposals": [
+                {
+                    "id": "4738093",
+                    "proposalURL": "https://www.donorschoose.org/project/for-the-love-of-reading/4738093/?utm_source=api&utm_medium=feed&utm_content=bodylink&utm_campaign=DONORSCHOOSE",
+                    "fundURL": "https://secure.donorschoose.org/donors/givingCart.html?proposalid=4738093&donationAmount=45&utm_source=api&utm_medium=feed&utm_content=fundlink&utm_campaign=DONORSCHOOSE",
+                    "imageURL": "https://www.donorschoose.org/teacher/photo/u5544606?size=sm&t=1579210462553",
+                    "retinaImageURL": "https://www.donorschoose.org/teacher/photo/u5544606?size=retina&t=1579210462553",
+                    "thumbImageURL": "https://www.donorschoose.org/teacher/photo/u5544606?size=thmb&t=1579210462553",
+                    "title": "For the Love of Reading",
+                    "shortDescription": "I love teaching second graders because at this age, students start to develop their own voice, sense of self, and character. This is the age when I can support how students think about their...",
+                    "fulfillmentTrailer": "Help me give my students floor cushions, dry erase markers, clipboards, and Post-It notes for our Reader's Workshop.",
+                    "snippets": [],
+                    "synopsis": "I love teaching second graders because at this age, students start to develop their own voice, sense of self, and character. This is the age when I can support how students think about their identity as a student and how they approach learning. \r\n\r\n99% of my students are Latino, and all come from low-income immigrant families. The majority of the students are bused to our school. Despite the hardships my students face as 7 and 8-year-olds, they enter the classroom every day curious, eager, nervous, and bright-eyed. They are ready to laugh, play, and challenge themselves in order to become lifelong leaders and learners.&lt;br/&gt;&lt;br/&gt;This year, my school started the Lucy Calkins Reader&#039;s Workshop curriculum. The focus of this workshop is to teach students to not only learn to read, but how to read to learn. My goal is for students to begin to love to read and get hooked into their books. The seat cushions will allow students to pick a comfortable spot to read. The manila folders, clipboards, post-it notes, and whiteboard markers will allow students to bring their work to the carpet. This will increase their levels of engagement during reading time. \r\n\r\nFor many of my students, they don&#039;t have a safe or quiet place to read at home. This makes reading time at school that much more important. This is such an important year in their cognitive development and they also need to build their sense of self and self-confidence. This is the moment to support their reading development. These materials will allow me to organize and create the best reading environment for my students.",
+                    "percentFunded": "72",
+                    "numDonors": "7",
+                    "costToComplete": "153.98",
+                    "studentLed": false,
+                    "numStudents": "24",
+                    "professionalDevelopment": false,
+                    "matchingFund": {
+                        "matchingKey": "",
+                        "ownerRegion": "",
+                        "name": "",
+                        "donorSalutation": "",
+                        "type": "",
+                        "matchImpactMultiple": "",
+                        "multipleForDisplay": "",
+                        "logoURL": "",
+                        "amount": "0.00",
+                        "description": ""
+                    },
+                    "totalPrice": "551.04",
+                    "freeShipping": "true",
+                    "teacherId": "5544606",
+                    "teacherName": "Ms. Kohut",
+                    "gradeLevel": {
+                        "id": "1",
+                        "name": "Grades PreK-2"
+                    },
+                    "povertyLevel": "Nearly all students from low‑income households",
+                    "povertyType": {
+                        "label": "HIGHEST",
+                        "name": "Nearly all students from low‑income households",
+                        "range": "90%+",
+                        "showPovertyLevel": "true"
+                    },
+                    "teacherTypes": [
+                        {
+                            "id": 1,
+                            "name": "Teach For America"
+                        }
+                    ],
+                    "schoolTypes": [],
+                    "schoolName": "Grant Elementary School",
+                    "schoolUrl": "https://www.donorschoose.org/school/grant-elementary-school/4210/",
+                    "city": "Richmond",
+                    "zip": "94804-1458",
+                    "state": "CA",
+                    "stateFullName": "California",
+                    "latitude": "37.923633575439453",
+                    "longitude": "-122.344337463378910",
+                    "zone": {
+                        "id": "402",
+                        "name": "California (North)"
+                    },
+                    "subject": {
+                        "id": "25",
+                        "name": "ESL",
+                        "groupId": "6"
+                    },
+                    "additionalSubjects": [
+                        {
+                            "id": "10",
+                            "name": "Literacy",
+                            "groupId": "6"
+                        }
+                    ],
+                    "resource": {
+                        "id": "10",
+                        "name": "Classroom Basics"
+                    },
+                    "expirationDate": "2020-05-16",
+                    "expirationTime": 1589601600000,
+                    "fundingStatus": "needs funding"
+                },
+            }
+	]
+    }
 ```
 
 ## Getting Started

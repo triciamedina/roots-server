@@ -2,13 +2,18 @@
 
 The REST API for [Roots](https://github.com/triciamedina/roots-app).
 
-## Get list of Things
+## Login
 
 ### Request
 
-`GET /thing/`
+`POST /api/login/`
 
-    curl -i -H 'Accept: application/json' http://localhost:7000/thing/
+### Parameters
+
+| Name | Type | Description |
+| ----------- | ----------- | ----------- | 
+| `email` | `string` | Required |
+| `password` | `string` | Required |
 
 ### Response
 

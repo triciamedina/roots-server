@@ -29,7 +29,7 @@ Clone the repository and download dependencies.
 
 ```
 $ git clone https://github.com/triciamedina/roots-server.git
-$ cd roots-app
+$ cd roots-server
 $ npm install
 ```
 

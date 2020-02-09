@@ -741,14 +741,52 @@ Status: 200 OK
 
 ## Getting Started
 
-### Installing
+### Setting up
 
-Clone the repository and download dependencies.
+Install dependencies
 
 ```
-$ git clone https://github.com/triciamedina/roots-server.git
-$ cd roots-server
-$ npm install
+npm install
+```
+
+Create development and test databases
+
+```
+createdb roots
+createdb roots-test
+```
+
+Create database user
+
+```
+createduser roots
+```
+
+Grant priveleges to new user in `psql`
+
+```
+GRANT ALL PRIVELEGES ON DATABASE roots TO roots
+GRANT ALL PRIVELEGES ON DATABASE "roots-test" TO roots
+```
+
+Bootstrap development database
+
+```
+npm run migrate 
+```
+
+Bootstrap test database
+
+```
+npm run migrate 
+```
+
+### Sample Data
+
+To seed the database for development
+
+```
+psql -U roots -d roots -a -f seeds/seed.roots_users.sql
 ```
 
 ### Testing

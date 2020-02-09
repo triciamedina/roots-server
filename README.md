@@ -778,7 +778,7 @@ npm run migrate
 Bootstrap test database
 
 ```
-npm run migrate 
+npm run migrate:test
 ```
 
 ### Sample Data
@@ -794,7 +794,7 @@ psql -U roots -d roots -a -f seeds/seed.roots_users.sql
 Run tests with Mocha, Chai, and SuperTest.
 
 ```
-$ npm run test
+npm run test
 ```
 
 ## Built With

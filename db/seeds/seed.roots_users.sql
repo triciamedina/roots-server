@@ -6,6 +6,6 @@ TRUNCATE
 
 INSERT INTO roots_users (email, first_name, last_name, password)
 VALUES
-    ('sam@email.com', 'Sam', 'Gamgee', '$2a$12$simF6/5Z2thud5c6Y/caVu2RcUb6msHTZE4efvZSvO7vveS3XgHCG');
+    ('test@test.com', 'FirstName', 'LastName', '$2y$12$GmDO.JQRnQ.T6LhwjurRVu.4DaMQvvueQaOYkH/9bjEjSk.HfVLbu');
 
 COMMIT;
